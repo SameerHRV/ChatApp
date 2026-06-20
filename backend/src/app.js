@@ -34,9 +34,9 @@ app.use(cookieParser());
 app.use(clerkMiddleware());
 const publicPath = path.join(process.cwd(), "public");
 
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
   res.json({
-    message: "Hello World!",
+    message: "THis is the health check endpoint",
   });
 });
 
