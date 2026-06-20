@@ -5,6 +5,7 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import config from "./config/config.js";
+import clerkWebhook from "./webhooks/clerk.webhook.js";
 
 const app = express();
 
@@ -30,13 +31,19 @@ app.use(
     limit: limit,
   }),
 );
+
 app.use(cookieParser());
 app.use(clerkMiddleware());
 const publicPath = path.join(process.cwd(), "public");
+app.use(
+  "/api/webhooks/clerk",
+  express.raw({ type: "application/json" }),
+  clerkWebhook,
+);
 
 app.get("/health", (req, res) => {
   res.json({
-    message: "THis is the health check endpoint",
+    message: "This is the health check endpoint",
   });
 });
 
